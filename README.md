@@ -10,3 +10,8 @@
 # 依赖收集和数据更新 Dependency collection and data update
 ## dep 依赖收集  管理watcher
 ## watcher update数据更新
+
+
+# 模板编译compile 
+## vue 模板中存在很多浏览器不识别的代码
+核心逻辑：获取dom，遍历dom，获取{{}}格式的变量，以及每个dom的属性，截获k-和@开头的设置响应式

@@ -9,17 +9,47 @@
 
 <body>
     <div id="app">
-        <p id="title"></p>
+        <!-- 插值绑定 -->
+        <p>{{name}}</p>
+        <!-- 指令解析 -->
+        <p k-text="name"></p>
+        <p>{{age}}</p>
+        <p>
+            {{doubleAge}}
+        </p>
+        <!-- 双向绑定 -->
+        <input type="text" k-model="name" />
+        <!-- 事件处理 -->
+        <button @click="changeName">呵呵</button>
+        <!-- html解析 -->
+        <div k-html="html"></div>
     </div>
+    <script src="./compile.js"></script>
     <script src="./index.js"></script>
 
     <script>
-        //调用方式
-        // new KVue({
-        //     data:{
-        //         name:"KVUE"
-        //     }
-        // })
+
+        const app = new KVue({
+            el: "#app",
+            data: {
+                name: "I am test",
+                age: 12,
+                html: "<button>这是一个按钮</button>"
+            },
+            created() {
+                console.log("开始啦");
+                setTimeout(() => {
+                    this.name = "我是测试";
+                }, 1500)
+            },
+            methods: {
+                changeName() {
+                    this.name = "哈喽，开始吧";
+                    this.age = 1;
+                }
+            }
+
+        });
 
     </script>
 </body>
