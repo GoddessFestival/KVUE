@@ -13,7 +13,7 @@ class KVue {
         this.observe(options.data);
     }
     observe(value) {
-        // value为假或不是预期类型
+        // value不存在或不是预期类型
         if (!value || typeof value != "object") {
             return;
         }
@@ -21,6 +21,7 @@ class KVue {
             this.defineReactive(value, key, value[key]);
         })
     }
+
     defineReactive(obj, key, val) {
         // 循环遍历
         this.observe(val);
@@ -41,10 +42,10 @@ class KVue {
 }
 
 var app = new KVue({
-    data:{
-        name:"KVUE",
-        foo:{
-            bar:"This is bar..."
+    data: {
+        name: "KVUE",
+        foo: {
+            bar: "This is bar..."
         }
     }
 })
