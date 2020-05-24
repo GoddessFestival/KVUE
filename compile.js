@@ -47,7 +47,23 @@ class Compile {
     }
     compileText(node) {
         console.log(RegExp.$1);
-        node.textContent = this.$vm.$data[RegExp.$1];
+        // this.textUpdater(node, this.$vm.$data[RegExp.$1])
+        this.update(node, this.$vm, RegExp.$1, "text");
+
+
+    }
+    // 更新函数
+    update(node, vm, exp, dir) {
+        const updaterFn = this[dir + 'Updater'];
+        // 初始化
+        updaterFn && updaterFn(node, this.$vm[exp]);
+        // 依赖收集
+        new Watcher(vm, exp, function (value) {
+            updaterFn && updaterFn(node, value)
+        })
+    }
+    textUpdater(node, value) {
+        node.textContent = value;
     }
 
     isElement(node) {
@@ -56,11 +72,6 @@ class Compile {
     // 插值文本
     isInterpolation(node) {
         return node.nodeType === 3 && /\{\{(.*)\}\}/.test(node.textContent);
-    }
-    update(type, value) {
-        console.log(`节点类型，${type}`);
-        console.log(`节点值，${value}`);
-
     }
 
 }
