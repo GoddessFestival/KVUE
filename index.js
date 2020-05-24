@@ -10,11 +10,16 @@ class KVue {
         this.$data = options.data; // $data 实例属性
         this.observe(options.data);
 
+
         // 模拟一下watcher创建
-        new Watcher();
-        this.$data.name;
-        new Watcher();
-        this.$data.foo.bar;
+        // new Watcher();
+        // this.$data.name;
+        // new Watcher();
+        // this.$data.foo.bar;
+        new Compile(options.el, this);
+        if (options.created) {
+            options.created.call(this);
+        }
     }
     observe(value) {
         // value不存在或不是预期类型
@@ -84,16 +89,18 @@ class Watcher {
 
 
 
-var app = new KVue({
-    data: {
-        name: "KVUE",
-        foo: {
-            bar: "This is bar..."
-        }
-    }
-})
+// var app = new KVue({
+//     data: {
+//         name: "KVUE",
+//         foo: {
+//             bar: "This is bar..."
+//         }
+//     }
+// })
 
-// 当查询或设置属性值会触发钩子函数（get，set）
-app.$data.name;
-app.$data.name = "This is KVue";
-app.$data.foo.bar = "This is bar property";
+// // 当查询或设置属性值会触发钩子函数（get，set）
+// app.$data.name;
+// app.$data.name = "This is KVue";
+// app.$data.foo.bar = "This is bar property";
+
+
